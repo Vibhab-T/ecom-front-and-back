@@ -110,12 +110,8 @@ Checkout (high-level):
 
 1. Component diagram — shows frontend ↔ backend modules and endpoints.
 
-```
 ![Api Components](api-comps.png)
-```
 
 2. Sequence diagram — checkout flow (frontend -> backend -> eSewa -> backend callback)
 
-```
 ![Sequence Diagram](sequence.png)
-```
