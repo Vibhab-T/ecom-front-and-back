@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bookstore - Orders</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="container">
+				<div class="nav-brand">📚 Bookstore</div>
+				<div class="nav-links">
+					<a href="index.html">Home</a>
+					<a href="cart.html"
+						>Cart <span id="cart-count" class="badge">0</span></a
+					>
+					<a href="orders.html" class="active">Orders</a>
+					<a href="#" id="auth-link">Login</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<h1>My Orders</h1>
+
+			<div id="orders-list">
+				<!-- Orders will be loaded here -->
+			</div>
+
+			<div id="no-orders" style="display: none">
+				<p>You haven't placed any orders yet.</p>
+				<a href="index.html" class="btn btn-primary">Start Shopping</a>
+			</div>
+		</div>
+
+		<script src="config.js"></script>
+		<script src="auth.js"></script>
+		<script src="orders.js"></script>
+	</body>
+</html>

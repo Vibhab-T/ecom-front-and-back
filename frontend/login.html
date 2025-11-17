@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bookstore - Login</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="container">
+				<div class="nav-brand">📚 Bookstore</div>
+				<div class="nav-links">
+					<a href="index.html">Home</a>
+					<a href="cart.html">Cart</a>
+					<a href="orders.html">Orders</a>
+					<a href="login.html" class="active">Login</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="auth-container">
+				<div class="auth-box">
+					<h2 id="auth-title">Login</h2>
+
+					<form id="login-form">
+						<div class="form-group">
+							<label for="login-email">Email</label>
+							<input type="email" id="login-email" required />
+						</div>
+						<div class="form-group">
+							<label for="login-password">Password</label>
+							<input type="password" id="login-password" required />
+						</div>
+						<button type="submit" class="btn btn-primary">Login</button>
+						<div id="login-error" class="error-message"></div>
+					</form>
+
+					<form id="register-form" style="display: none">
+						<div class="form-group">
+							<label for="register-name">Name</label>
+							<input type="text" id="register-name" required />
+						</div>
+						<div class="form-group">
+							<label for="register-email">Email</label>
+							<input type="email" id="register-email" required />
+						</div>
+						<div class="form-group">
+							<label for="register-password">Password</label>
+							<input
+								type="password"
+								id="register-password"
+								required
+								minlength="6" />
+						</div>
+						<button type="submit" class="btn btn-primary">Register</button>
+						<div id="register-error" class="error-message"></div>
+					</form>
+
+					<div class="auth-toggle">
+						<p id="toggle-text">
+							Don't have an account? <a href="#" id="toggle-link">Register</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="config.js"></script>
+		<script src="auth.js"></script>
+		<script src="login.js"></script>
+	</body>
+</html>

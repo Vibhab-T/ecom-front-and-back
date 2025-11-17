@@ -1,0 +1,102 @@
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import connectToMongoDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import bookRoutes from './routes/bookRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
+import { errorHandler } from './middlewares/errorHandlers.js';
+import { requestLogger } from './middlewares/logger.js';
+
+//load env variables
+dotenv.config();
+
+//for ejs
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+//config ejs as view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+//middlewares
+
+//cors configuration
+const corsOptions = {
+	origin: process.env.CLIENT_URL || [
+		'http://localhost:3000',
+		'http://localhost:8000',
+	],
+	credentials: true, // Allow cookies
+	optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+
+//request logging middleware - cool little thing man
+app.use(requestLogger);
+
+//routes
+app.use('/api/auth', authRoutes);
+app.use('/api/books', bookRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/payment', paymentRoutes);
+
+//health check
+app.get('/health', (req, res) => {
+	res.status(200).json({
+		succes: true,
+		message: 'Server is running',
+		timestamp: new Date().toISOString(),
+	});
+});
+
+//root route
+app.use('/', (req, res) => {
+	res.send(`<h1>BACKEND RUNNING ON PORT ${PORT}</h1>`);
+});
+
+//404 handler for routes undefined
+app.use('/{*any}', (req, res) => {
+	res.status(404).json({
+		sucess: false,
+		error: 'Route not found',
+		code: 'ROUTE_NOT_FOUND',
+	});
+});
+
+//error handling middleware must be last
+app.use(errorHandler);
+
+app.listen(PORT, async () => {
+	try {
+		await connectToMongoDB();
+		console.log(`Server running on port: ${PORT}`);
+	} catch (error) {
+		console.log('ERROR STARTING SERVER!!! \n\n', error.message);
+	}
+});
+
+//handle promise rejections that were unhandled
+process.on('unhandledRejection', (err) => {
+	console.error('UNHANDLED REJECTION, SHUTTING DOWN!!');
+	console.error(err.name, err.message);
+	process.exit(1);
+});
+
+//handle exceptions uncaught
+process.on('uncaughtException', (err) => {
+	console.error('UNCAUGHT EXCEPTION, SHUTTING DOWN');
+	console.error(err.name, err.message);
+	process.exit(1);
+});

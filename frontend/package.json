@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"start": "npx http-server -p 3000",
+		"build": "node ./scripts/generate-env.js"
+	},
+	"dependencies": {
+		"toastify": "^2.0.1"
+	}
+}
